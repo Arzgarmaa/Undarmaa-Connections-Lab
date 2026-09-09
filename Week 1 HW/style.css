@@ -1,0 +1,93 @@
+body {
+  background-color: #54075490;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h1 {
+  color: gold;
+  text-align: center;
+}
+
+p {
+  color: gold;
+  text-align: center;
+  background-color:#00004444;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.photos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+/* .image:nth-child(1) {
+  width: 25%;
+}
+
+.image:nth-child(2) {
+  width: 50%;
+}
+
+.image:nth-child(3) {
+  width: 25%;
+} */
+
+#mb{
+    animation-name: move;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes move {
+    0%{
+        transform: translateX(0vw);
+    }
+    18%{
+        transform: translateX(12vw);
+    }
+    36%{
+       transform: translateX(24vw);
+    }
+    54%{
+       transform: translateX(38vw);
+    }
+    70%{
+       transform: translateX(52vw);
+    }
+
+}
+
+#md{
+    animation-name: me;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes me {
+    0%{
+        transform: translateX(0vw);
+    }
+    18%{
+        transform: translateX(24vw);
+    }
+    36%{
+       transform: translateX(38vw);
+    }
+    54%{
+       transform: translateX(24vw);
+    }
+    70%{
+       transform: translateX(52vw);
+    }
+
+}
