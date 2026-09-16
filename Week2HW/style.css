@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+}
+
+
+.wall {
+    background-color: #343231;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 70px;
+}
+
+.story {
+    /* justify-self: center; */
+    align-self: center;
+    color: white;
+}
+
+.elevator {
+    width: 450px;
+    height: 650px;
+    background-color: #555;
+    border: 2px solid #777;
+    position: relative;
+    overflow: hidden;
+    align-self: flex-end;
+}
+
+#camera {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
+
+.door {
+    width: 50%;
+    height: 100%;
+
+    background-color: #999;
+
+    position: absolute;
+    top: 0;
+
+    transition: transform 1.5s;
+}
+
+
+.left-door {
+    left: 0;
+    border-right: 1px solid #666;
+}
+
+.right-door {
+    right: 0;
+    border-left: 1px solid #666;
+}
+
+.left-door.open {
+    transform: translateX(-100%);
+}
+
+.right-door.open {
+    transform: translateX(100%);
+}
+
+.button-panel {
+    /* width: 70px;
+    height: 150px; */
+    /* background-color: #777;
+    border-radius: 10%; */
+    /* border: 5px solid #555; */
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    align-self: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 0px;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    /* text-align: center; */
+    /* gap: 40px; */
+}
+
+.opens {
+    background-color: #1d1c1b;
+    /* align-items: center; */
+    text-align: center;
+    
+}
+
+.close {
+    background-color: #1d1c1b;
+}
+
+/* .stairs {
+    width:400px;
+    height: 600px;
+    bottom: 0; 
+    background-color:aqua;
+    display:; 
+    justify-content: baseline;
+
+} */
