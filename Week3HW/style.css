@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    background-color: black;
+}
+.main {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+.right {
+  background-color: #941ad6;
+  width: 100px;
+  height: 100px;
+  align-self: center;
+  border-radius: 50%;
+  color: blanchedalmond;
+}
+
+.filmPoster {
+  background-color: #343231;
+  width: 450px;
+  height: 650px;
+}
+
+.left {
+  background-color: #12afa2;
+  width: 100px;
+  height: 100px;
+  align-self: center;
+  border-radius: 50%;
+  color: blanchedalmond;
+}
+
