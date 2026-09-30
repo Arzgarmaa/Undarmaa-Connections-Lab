@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- for wrapping content= -->
+        <title>filmia</title>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Filmia</h1>
+            <p>Look up a movie to get other movie recommendations with the movie's metadata</p>
+            <br>
+
+            <div class="search"> 
+
+            <input id="searchfilm" 
+            type="text" 
+            placeholder="Write the exact title to look up...">
+
+            <button id="searchbutton">
+            Search
+            </button>
+
+            </div>
+
+        </header>
+
+        <main>
+            <section id="mainfilminfo"> 
+
+                <section class="filminfo">
+
+                    <img id="poster" scr="" alt="Film for the for the searched movie">
+
+                    <div class="filminfo2">
+                        <h2 id="filmtitle"> </h2>
+                        <p class="metadata">
+                            <span id="year"></span>
+                            <span>•</span>
+                            <span id="runtime"></span>
+                            <span>•</span>
+                            <span id="genre"></span>
+                        </p>
+
+                        <p id="co">  </p>
+                    </div>
+
+                    <div class="people">
+                        <p>
+                            <strong>Director</strong>
+                            <br>
+                            <span id="director"></span>
+                        </p>
+                        <p>
+                            <strong>Cast</strong>
+                            <br>
+                            <span id="cast">
+
+                            </span>
+                        </p>
+                    </div>
+
+                </section>
+                <section id="filmrating">
+                    <h3>Ratings</h3>
+
+                        <div class="ratings">
+
+                            <div class="rating">
+                                <strong>IMDb</strong>
+                                <span id="imdbrating"></span>
+                            </div>
+
+                            <div class="rating">
+                                <strong>Rotten Tomatoes</strong>
+                                <span id="rottenrating"></span>
+                            </div>
+
+                            <div class="rating">
+                                <strong>Metacritic</strong>
+                                <span id="metacriticrating"></span>
+                            </div>
+
+                        </div>
+
+                </section>
+                <section id="filmawards">
+
+
+                    <h3>Awards</h3>
+
+                    <p id="awards"></p>
+
+
+                </section>
+                <section id="filmrec">
+
+                    <h3>You May Also Like</h3>
+
+                    <div id="reclist">
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+
+        <script src="script.js"></script>
+    </body>
+</html>

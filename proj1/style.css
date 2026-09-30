@@ -1,0 +1,184 @@
+/* Makes sizing easier for every element */
+* {
+    box-sizing: border-box;
+}
+
+
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #2a3e28;
+    color: #faf6d8;
+}
+
+
+
+header {
+    text-align: center;
+    padding: 80px 20px 50px;
+}
+
+header h1 {
+    font-size: 40px;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+}
+
+
+.search {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+#searchfilm {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-right: none;
+}
+
+#searchbutton {
+    padding: 15px 25px;
+    background-color: #181818;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#searchbutton:hover {
+    background-color: #444;
+}
+
+
+#mainfilminfo {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px 30px 100px;
+    display: none;
+}
+
+
+/* MAIN MOVIE INFORMATION */
+
+.filminfo {
+    display: flex;
+    gap: 40px;
+    padding-bottom: 50px;
+}
+
+#poster {
+    width: 260px;
+    height: auto;
+    object-fit: cover;
+}
+
+.filminfo2 {
+    flex: 1;
+}
+
+#filmtitle {
+    font-size: 42px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+
+/* YEAR, RUNTIME, GENRE */
+
+.metadata {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: #a5a5a5;
+}
+
+#co {
+    color: #a5a5a5;
+;
+}
+
+
+/* DIRECTOR + CAST */
+
+.people {
+    margin-top: 40px;
+}
+
+.people p {
+    line-height: 1.7;
+}
+
+
+
+#filmrating,
+#filmawards,
+#filmrec {
+    border-top: 0.1px solid #aaa;
+    padding: 30px 0;
+}
+
+#filmrating h3,
+#filmawards h3,
+#filmrec h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0;
+}
+
+
+
+.ratings {
+    display: flex;
+    gap: 20px;
+}
+
+.rating {
+    flex: 1;
+    border: 1px solid #faf6d8;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rating span {
+    font-size: 24px;
+}
+
+
+
+#reclist {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.recommendation {
+    border: 1px solid #faf6d8;
+    padding: 12px 18px;
+}
+
+@media (max-width: 650px) {
+
+    .filminfo {
+        flex-direction: column;
+    }
+
+    #poster {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .ratings {
+        flex-direction: column;
+    }
+
+    #filmtitle {
+        font-size: 32px;
+    }
+}
