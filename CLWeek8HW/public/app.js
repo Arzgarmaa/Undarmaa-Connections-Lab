@@ -20,7 +20,9 @@ window.addEventListener('load', () => {
   const getColor = () => `rgb(${rSlider.value}, ${gSlider.value}, ${bSlider.value})`;
   const getMode = () => document.querySelector('input[name="mode"]:checked').value;
 
-  function updatePreview() { preview.style.background = getColor(); }
+  function updatePreview() { 
+    preview.style.background = getColor(); 
+  }
   [rSlider, gSlider, bSlider].forEach(s => s.addEventListener('input', updatePreview));
   updatePreview();
 
@@ -153,6 +155,7 @@ window.addEventListener('load', () => {
     currentStroke = [pos(e, pad)];
     padStrokes.push(currentStroke);
   });
+
   pad.addEventListener('pointermove', (e) => {
     if (!padDrawing) return;
     const p = pos(e, pad);
@@ -166,6 +169,7 @@ window.addEventListener('load', () => {
     pctx.lineTo(p.x, p.y);
     pctx.stroke();
   });
+
   window.addEventListener('pointerup', () => { padDrawing = false; });
 
   document.getElementById('clearPad').addEventListener('click', () => {
@@ -220,5 +224,27 @@ window.addEventListener('load', () => {
   document.getElementById('clearAll').addEventListener('click', () => {
     ctx.clearRect(0, 0, main.width, main.height);
     socket.emit('clear');
+  });
+
+  // ---------- export canvas image ----------
+  document.getElementById('exportImg').addEventListener('click', () => {
+    // Create a temporary canvas to burn in a solid white background before export
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = main.width;
+    exportCanvas.height = main.height;
+    const eCtx = exportCanvas.getContext('2d');
+
+    // Fill white background
+    eCtx.fillStyle = '#ffffff';
+    eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+    // Draw main canvas over it
+    eCtx.drawImage(main, 0, 0);
+
+    // Trigger download
+    const link = document.createElement('a');
+    link.download = `drawing-${Date.now()}.png`;
+    link.href = exportCanvas.toDataURL('image/png');
+    link.click();
   });
 });

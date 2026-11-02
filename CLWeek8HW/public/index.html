@@ -3,24 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shape Drawing App</title>
-  <style>
-    body { font-family: sans-serif; margin: 16px; background: #f4f1ea; }
-    #layout { display: flex; gap: 16px; flex-wrap: wrap; }
-    canvas { background: white; border: 2px solid #333; touch-action: none; }
-    #side { display: flex; flex-direction: column; gap: 10px; width: 220px; }
-    .rgb { width: 100%; }
-    #r { accent-color: red; }
-    #g { accent-color: green; }
-    #b { accent-color: blue; }
-    #preview { height: 24px; border: 1px solid #333; }
-    #shapeList { display: flex; flex-wrap: wrap; gap: 6px; }
-    #shapeList canvas { width: 50px; height: 50px; cursor: pointer; border: 2px solid #aaa; }
-    #shapeList canvas.selected { border-color: #e03; }
-  </style>
+  <title>Draw Together App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Shape Drawing App</h1>
+  <h1>Drawing Together and Pen Tool App</h1>
   <div id="layout">
     <canvas id="main" width="800" height="500"></canvas>
 
@@ -59,6 +46,7 @@
       <div id="shapeList"></div>
 
       <button id="clearAll">Clear whole canvas</button>
+      <button id="exportImg">Save / Export Image</button>
     </div>
   </div>
 
