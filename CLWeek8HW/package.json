@@ -1,16 +1,17 @@
 {
   "name": "clweek8hw",
   "version": "1.0.0",
-  "description": "",
+  "description": "Collaborative drawing and pen tool app",
+  "author": "janice vuong, undarmaa tserenkhuu",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified. BOBELIcious\" && exit 1"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "socket.io": "^4.6.1"
   }
 }
