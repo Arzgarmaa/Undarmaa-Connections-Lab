@@ -5,23 +5,21 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 
-//adding inline comments to understand the code better
-
-// Initialize Socket.IO with a 5MB buffer limit to support large base64 image data URLs
+// Initialize Socket.IO with a 5MB buffer limit
 const io = new Server(server, { maxHttpBufferSize: 5e6 });
 
 // Serve static frontend files from the 'public' folder
 app.use(express.static('public'));
 
-// In-memory stores for canvas drawing history and custom pen shapes
+// In-memory stores for canvas drawing history and custom pen icons
 let history = [];
-let shapes = [];
+let icons = [];
 
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  // Send initial canvas state to newly connected client
-  socket.emit('init', { history, shapes });
+  // Send initial canvas state and saved icons to newly connected client
+  socket.emit('init', { history, icons });
 
   // Relay live drawing strokes/stamps to all other connected clients
   socket.on('draw', (d) => {
@@ -29,10 +27,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('draw', d);
   });
 
-  // Broadcast new custom pen shapes (e.g., hearts/drawn icons) to all clients
-  socket.on('saveShape', (s) => {
-    shapes.push(s);
-    io.emit('shapeSaved', s);
+  // Broadcast new custom pen icons to all clients
+  socket.on('saveIcon', (icon) => {
+    icons.push(icon);
+    io.emit('iconSaved', icon);
   });
 
   // Clear canvas history for all connected clients
