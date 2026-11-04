@@ -11,16 +11,18 @@ window.addEventListener('load', () => {
   const brushType = document.getElementById('brushType');
   const sizeSlider = document.getElementById('size');
   const preview = document.getElementById('preview');
-  const shapeList = document.getElementById('shapeList');
+  const iconList = document.getElementById('iconList') || document.getElementById('shapeList');
 
-  let shapes = [];
-  let selectedShape = null;
+  let icons = [];
+  let selectedIcon = null;
   let padStrokes = [];
 
   const getColor = () => `rgb(${rSlider.value}, ${gSlider.value}, ${bSlider.value})`;
   const getMode = () => document.querySelector('input[name="mode"]:checked').value;
 
-  function updatePreview() { preview.style.background = getColor(); }
+  function updatePreview() { 
+    preview.style.background = getColor(); 
+  }
   [rSlider, gSlider, bSlider].forEach(s => s.addEventListener('input', updatePreview));
   updatePreview();
 
@@ -81,13 +83,13 @@ window.addEventListener('load', () => {
     c.globalAlpha = 1;
   }
 
-  function drawStamp(c, shape, x, y, size, color) {
+  function drawStamp(c, icon, x, y, size, color) {
     c.strokeStyle = color;
     c.lineWidth = Math.max(2, size / 12);
     c.lineCap = 'round';
     c.lineJoin = 'round';
     c.globalAlpha = 1;
-    shape.strokes.forEach(stroke => {
+    icon.strokes.forEach(stroke => {
       c.beginPath();
       stroke.forEach((p, i) => {
         const px = x + p.x * size, py = y + p.y * size;
@@ -100,8 +102,8 @@ window.addEventListener('load', () => {
   function render(d) {
     if (d.type === 'line') drawLine(ctx, d);
     else if (d.type === 'stamp') {
-      const s = shapes.find(s => s.id === d.shapeId);
-      if (s) drawStamp(ctx, s, d.x, d.y, d.size, d.color);
+      const icon = icons.find(i => i.id === d.iconId || i.id === d.shapeId);
+      if (icon) drawStamp(ctx, icon, d.x, d.y, d.size, d.color);
     }
   }
 
@@ -137,15 +139,15 @@ window.addEventListener('load', () => {
   window.addEventListener('pointerup', () => { drawing = false; });
 
   function stampAt(p) {
-    if (!selectedShape) return;
-    const d = { type: 'stamp', shapeId: selectedShape.id, x: p.x, y: p.y,
+    if (!selectedIcon) return;
+    const d = { type: 'stamp', iconId: selectedIcon.id, x: p.x, y: p.y,
                 color: getColor(), size: Number(sizeSlider.value) };
     render(d);
     socket.emit('draw', d);
     lastStamp = p;
   }
 
-  // ---------- shape pad ----------
+  // ---------- icon pad ----------
   let padDrawing = false, currentStroke = null;
 
   pad.addEventListener('pointerdown', (e) => {
@@ -153,6 +155,7 @@ window.addEventListener('load', () => {
     currentStroke = [pos(e, pad)];
     padStrokes.push(currentStroke);
   });
+
   pad.addEventListener('pointermove', (e) => {
     if (!padDrawing) return;
     const p = pos(e, pad);
@@ -166,6 +169,7 @@ window.addEventListener('load', () => {
     pctx.lineTo(p.x, p.y);
     pctx.stroke();
   });
+
   window.addEventListener('pointerup', () => { padDrawing = false; });
 
   document.getElementById('clearPad').addEventListener('click', () => {
@@ -173,7 +177,8 @@ window.addEventListener('load', () => {
     padStrokes = [];
   });
 
-  document.getElementById('saveShape').addEventListener('click', () => {
+  const saveBtn = document.getElementById('saveIcon') || document.getElementById('saveShape');
+  saveBtn.addEventListener('click', () => {
     if (padStrokes.length === 0) return;
 
     const all = padStrokes.flat();
@@ -183,42 +188,61 @@ window.addEventListener('load', () => {
     const scale = Math.max(maxX - minX, maxY - minY) || 1;
     const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
 
-    const shape = {
+    const icon = {
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 7),
       strokes: padStrokes.map(s => s.map(p => ({ x: (p.x - cx) / scale, y: (p.y - cy) / scale })))
     };
-    socket.emit('saveShape', shape);
+    socket.emit('saveIcon', icon);
 
     pctx.clearRect(0, 0, pad.width, pad.height);
     padStrokes = [];
   });
 
-  // ---------- saved shape list ----------
-  function addShapeThumb(shape) {
-    shapes.push(shape);
+  // ---------- saved icon list ----------
+  function addIconThumb(icon) {
+    icons.push(icon);
     const c = document.createElement('canvas');
     c.width = 100; c.height = 100;
-    drawStamp(c.getContext('2d'), shape, 50, 50, 80, '#000');
+    drawStamp(c.getContext('2d'), icon, 50, 50, 80, '#000');
     c.addEventListener('click', () => {
-      selectedShape = shape;
-      document.querySelectorAll('#shapeList canvas').forEach(el => el.classList.remove('selected'));
+      selectedIcon = icon;
+      document.querySelectorAll('#iconList canvas, #shapeList canvas').forEach(el => el.classList.remove('selected'));
       c.classList.add('selected');
       document.querySelector('input[value="shape"]').checked = true;
     });
-    shapeList.appendChild(c);
+    iconList.appendChild(c);
   }
 
   // ---------- socket events ----------
   socket.on('init', (data) => {
-    data.shapes.forEach(addShapeThumb);
+    const initialIcons = data.icons || data.shapes || [];
+    initialIcons.forEach(addIconThumb);
     data.history.forEach(render);
   });
   socket.on('draw', render);
-  socket.on('shapeSaved', addShapeThumb);
+  socket.on('iconSaved', addIconThumb);
+  socket.on('shapeSaved', addIconThumb); // fallback for backward compatibility
   socket.on('clear', () => ctx.clearRect(0, 0, main.width, main.height));
 
   document.getElementById('clearAll').addEventListener('click', () => {
     ctx.clearRect(0, 0, main.width, main.height);
     socket.emit('clear');
+  });
+
+  // ---------- export canvas image ----------
+  document.getElementById('exportImg').addEventListener('click', () => {
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = main.width;
+    exportCanvas.height = main.height;
+    const eCtx = exportCanvas.getContext('2d');
+
+    eCtx.fillStyle = '#ffffff';
+    eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+    eCtx.drawImage(main, 0, 0);
+
+    const link = document.createElement('a');
+    link.download = `drawing-${Date.now()}.png`;
+    link.href = exportCanvas.toDataURL('image/png');
+    link.click();
   });
 });

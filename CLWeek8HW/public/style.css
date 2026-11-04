@@ -1,0 +1,67 @@
+body {
+  font-family: sans-serif;
+  margin: 16px;
+  background: #f4f1ea;
+}
+
+#layout {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+canvas {
+  background: white;
+  border: 2px solid #333;
+  touch-action: none;
+}
+
+#side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 220px;
+}
+
+.rgb {
+  width: 100%;
+}
+
+#r {
+  accent-color: red;
+}
+
+#g {
+  accent-color: green;
+}
+
+#b {
+  accent-color: blue;
+}
+
+#preview {
+  height: 24px;
+  border: 1px solid #333;
+}
+
+/* Saved Icon / Shape List Gallery */
+#iconList,
+#shapeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#iconList canvas,
+#shapeList canvas {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border: 2px solid #aaa;
+  background: white;
+}
+
+#iconList canvas.selected,
+#shapeList canvas.selected {
+  border-color: #e03;
+}
